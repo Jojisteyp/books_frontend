@@ -1,115 +1,134 @@
-import React from 'react'
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import { Link,  } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import { Helmet } from "react-helmet";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { UserContext } from "../../App";
+
+function SingleFood() {
+  const [des, setDes] = useState({});
+  const { id } = useParams();
+  const { userData } = useContext(UserContext);
+  const navi = useNavigate();
 
 
-function Singlebooks() {
-  return (
+    return (
+      <>
+        <Helmet>
+          <title>AllRecipes|Single Recipie</title>
+        </Helmet>
+        <MainContainer>
+          <DesHead>{des.name}</DesHead>
+          <DeleteContainer>
+            <Link onClick={() => deleteUser(des.id)}>
+              <Delete>Delete Post</Delete>
+            </Link>
+            <Link to={`/description/${des.id}/update/${des.id}`}>
+              {" "}
+              <Delete>Update Post</Delete>
+            </Link>
+            <Delete onClick={() => add_to_favorites(des.id)} id="Favourites">
+              Add to Favourite
+            </Delete>
+            <Fav id="fav">Favourite</Fav>
 
- <>
-    <Helmet>
-      <title>|Single Books</title>
-    </Helmet>
-    <MainContainer>
-      <DesHead></DesHead>
-      <DeleteContainer>
-        <Link >
-          <Delete>Delete Post</Delete>
-        </Link>
-        <Link >
-          <Delete>Update Post</Delete>
-        </Link>
-        <Delete id="Favourites">
-          Add to Favourite
-        </Delete>
-        <Fav id="fav">Favourite</Fav>
+            <PublisherName> Publisher: {des.author}</PublisherName>
+          </DeleteContainer>
 
-        <PublisherName> Publisher:</PublisherName>
-      </DeleteContainer>
-      <FoodCard>
-        <LeftContainer>
-          <ImageContainer>
-            <Image />
-          </ImageContainer>
-        </LeftContainer>
-        <RightContainer></RightContainer>
-      </FoodCard>
-      <Content></Content>
-    </MainContainer>
-</>
-);
-};
+          <FoodCard>
+            <LeftContainer>
+              <ImageContainer>
+                <Image src={des.featured_image} />
+              </ImageContainer>
+            </LeftContainer>
+            <RightContainer></RightContainer>
+          </FoodCard>
+          <Content>
+            <Top>BOOk NAME :</Top>
+            <Cont>{des.title}</Cont>
+            {/* <Top>Description  : </Top>
+            <Cont>{des.description}</Cont> */}
+          </Content>
+        </MainContainer>
+      </>
+    );
+  };
+  useEffect(() => {
+    getSingleFood();
+  }, []);
+  return <>{renderFoods()}</>;
+}
 
-
-
-export default Singlebooks;
-
+export default SingleFood;
 const MainContainer = styled.div`
-width: 77%;
-margin: 0 auto;
-padding-top: 65px;
+  width: 77%;
+  margin: 0 auto;
+  padding-top: 65px;
 `;
 const DesHead = styled.h1`
-font-size: 50px;
-margin-bottom: 10px;
+  font-size: 50px;
+  margin-bottom: 10px;
 `;
 const DeleteContainer = styled.div`
-display: flex;
-align-items: center;
-/* width: 25%; */
-margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  /* width: 25%; */
+  margin-bottom: 20px;
 `;
 const Delete = styled.span`
-display: inline-block;
-color: #b4b4b4;
-border: 2px solid #b4b4b4;
-border-radius: 30px;
-padding: 4px 8px;
-margin-left: 10px;
+  display: inline-block;
+  color: #b4b4b4;
+  border: 2px solid #b4b4b4;
+  border-radius: 30px;
+  padding: 4px 8px;
+  margin-left: 10px;
 `;
 
 const PublisherName = styled.h6`
-margin-left: 16px;
-font-size: 16px;
-color: #a2a2a2;
+  margin-left: 16px;
+  font-size: 16px;
+  color: #a2a2a2;
 `;
 const FoodCard = styled.div`
-display: flex;
-justify-content: space-between;
-margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
 `;
 const LeftContainer = styled.div`
-width: 50%;
+  width: 50%;
 `;
 const ImageContainer = styled.div`
-border-top-left-radius: 10px;
-border-bottom-left-radius: 10px;
-overflow: hidden;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  overflow: hidden;
 `;
 const Image = styled.img`
-display: block;
-width: 100%;
+  display: block;
+  width: 100%;
 `;
 const RightContainer = styled.div`
- display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
-width: 48%; 
+  /* display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 48%; */
 `;
 
 const Content = styled.div``;
-
-// const Top = styled.h3`
-// font-size: 26px;
-// margin-bottom: 20px;
-// `;
-
+const Top = styled.h3`
+  font-size: 26px;
+  margin-bottom: 20px;
+`;
+const Cont = styled.p`
+  color: #545454;
+  font-size: 18px;
+  line-height: 1.5rem;
+  font-weight: 400;
+`;
 const Fav = styled.div`
-display: none;
-color: green;
-border: 2px solid green;
-border-radius: 30px;
-padding: 4px 8px;
-margin-left: 10px;
+  display: none;
+  color: green;
+  border: 2px solid green;
+  border-radius: 30px;
+  padding: 4px 8px;
+  margin-left: 10px;
 `;
