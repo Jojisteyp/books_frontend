@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Rating from "react-rating";
+import { UserContext } from "../../App";
 
-function Addbooks() {
+function AddRecipie() {
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [bookName, setBookName] = useState("");
@@ -12,6 +14,7 @@ function Addbooks() {
   const [categories, setCategories] = useState([]);
   const [favorite, setFavorite] = useState(false);
   const [rating, setRating] = useState(0);
+  const { userData } = useContext(UserContext);
 
 
   const navigate = useNavigate();
@@ -23,23 +26,23 @@ function Addbooks() {
     formField.append("title", name);
     formField.append("description", description);
     formField.append("categories", JSON.stringify(categories)); // Convert to JSON string
-     formField.append("favorite", favorite);
-     formField.append("ingredients", ingredients);
+    // formField.append("favorite", favorite);
+    // formField.append("ingredients", ingredients);
     if (image !== null) {
       formField.append("featured_image", image);
     }
-//     await axios({
-//       method: "post",
-//       url: "http://127.0.0.1:8000/api/v1/books/create/",
-//       headers: {
-//         Authorization: `Bearer ${userData?.access}`,
-//       },
+    await axios({
+      method: "post",
+      url: "http://127.0.0.1:8000/api/v1/books/create/",
+      headers: {
+        Authorization: `Bearer ${userData?.access}`,
+      },
 
-//       data: formField,
-//     }).then((response) => {
-//       navigate("/home");
-//     });
-   };
+      data: formField,
+    }).then((response) => {
+      navigate("/home");
+    });
+  };
   return (
     <MainContainer>
       <Heading>Add Your Books Here ↓</Heading>
@@ -51,10 +54,10 @@ function Addbooks() {
             placeholder="Enter Your Name"
             id="id_name"
             value={name}
-            // onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </InputContainer>
-        <InputContainer>
+        {/* <InputContainer>
           <Label for="id_food_name">Book Name</Label>
           <TextInput
             type="text"
@@ -62,16 +65,16 @@ function Addbooks() {
             id="id_food_name"
             name="name"
             value={bookName}
-            // onChange={(e) => setbookName(e.target.value)}
+            onChange={(e) => setbookName(e.target.value)}
           />
-        </InputContainer>
+        </InputContainer> */}
         <InputContainer>
           <Label for="id_featured_image">Featured Image</Label>
           <TextInput
             type="file"
             accept="image/*"
             id="id_featured_image"
-            // onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </InputContainer>
         <InputContainer>
@@ -82,7 +85,7 @@ function Addbooks() {
             id="id_book_name"
             name="name"
             value={bookName}
-            // onChange={(e) => setBookName(e.target.value)}
+            onChange={(e) => setBookName(e.target.value)}
           />
         </InputContainer>
         <InputContainer>
@@ -92,7 +95,7 @@ function Addbooks() {
             emptySymbol={<span className="fa fa-star-o fa-2x" />}
             fullSymbol={<span className="fa fa-star fa-2x" />}
             initialRating={rating}
-            // onChange={(value) => setRating(value)}
+            onChange={(value) => setRating(value)}
           />
         </InputContainer>
 
@@ -103,7 +106,7 @@ function Addbooks() {
             placeholder="Enter Categories"
             id="id_categories"
             value={categories}
-            // onChange={(e) => setCategories(e.target.value)}
+            onChange={(e) => setCategories(e.target.value)}
           />
         </InputContainer>
 
@@ -113,7 +116,7 @@ function Addbooks() {
             type="checkbox"
             id="id_favorite"
             checked={favorite}
-            // onChange={(e) => setFavorite(e.target.checked)}
+            onChange={(e) => setFavorite(e.target.checked)}
           />
         </InputContainer>
 
@@ -127,7 +130,7 @@ function Addbooks() {
   );
 }
 
-export default Addbooks;
+export default AddRecipie;
 
 const MainContainer = styled.div`
   width: 85%;

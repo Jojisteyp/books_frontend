@@ -1,12 +1,52 @@
-import React from 'react'
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
-import { Link,  } from "react-router-dom";
-
+import React, { useContext, useState } from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Helmet } from "react-helmet";
+import { UserContext } from "../../App";
 
 function Signup() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const { updateUserData } = useContext(UserContext);
+
+  const onHandleSubmit = (e) => {
+    e.preventDefault();
+    setMessage("");
+    axios
+      .post(`http://127.0.0.1:8000/api/v1/auth/register/`, {
+        email,
+        password,
+        name: name,
+      })
+      .then((response) => {
+        let data = response.data.data;
+        console.log(response.data);
+        let status_code = response.data.status_code;
+        if (status_code === 6000) {
+          console.log(status_code);
+          localStorage.setItem("user_login_data", JSON.stringify(data));
+          updateUserData({ type: "LOGIN", payload: data });
+          navigate("/home");
+        } else {
+          setMessage(response.data.data);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error.response);
+        if (error.response.status === 500) {
+          setMessage("Name,Email and Password:Field is required");
+        }
+        if (error.response.status === 401) {
+          setMessage(error.response.data.detail);
+        }
+      });
+  };
   return (
-<>
+    <>
       <Helmet>
         <title>Signup Page</title>
       </Helmet>
@@ -19,29 +59,37 @@ function Signup() {
           <LoginContainer>
             <LoginHeading>Register into Account</LoginHeading>
             <LoginInfo>Create and Explore the world of Books</LoginInfo>
-            <Form >
+            <Form onSubmit={onHandleSubmit}>
               <InputContainer>
                 <TextInput
                   type="text"
                   placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </InputContainer>
               <InputContainer>
                 <TextInput
                   type="email"
                   placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </InputContainer>
               <InputContainer>
                 <TextInput
                   type="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ marginBottom: "30px" }}
                 />
               </InputContainer>
 
               <ButtonContainer>
                 <SubmitButton>Create an Account</SubmitButton>
                 <LoginButton to="/auth/login/">Login Now</LoginButton>
+                {message && <ErrorMessage>{message}</ErrorMessage>}
               </ButtonContainer>
             </Form>
           </LoginContainer>
@@ -53,13 +101,13 @@ function Signup() {
 
 export default Signup;
 const Container = styled.div`
-  height: calc(110vh - 120px);
+  height: calc(95vh - 110px);
   display: flex;
-  background-color: #c2b3b3;
+  background-color: #a6a5a5;
 `;
 const LeftContainer = styled.div`
-  width: 35%;
-  padding: 100px;
+  width: 30%;
+  padding: 80px;
 `;
 const Image = styled.img`
   width: 100%;
@@ -83,12 +131,12 @@ const LoginHeading = styled.h3`
   font-size: 46px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #171515;
+  color: #fff;
 `;
 const LoginInfo = styled.p`
   font-size: 18px;
   margin-bottom: 35px;
-  color: #171515;
+  color: #fff;
 `;
 const Form = styled.form`
   width: 100%;
@@ -108,7 +156,7 @@ const TextInput = styled.input`
 `;
 const LoginButton = styled(Link)`
   display: inline-block;
-  border: 4px solid #dfb40a;
+  border: 4px solid #c3bc2f;
   transition: background-color 0.5s ease 0s;
   text-decoration: none;
   color: #fff;
@@ -118,14 +166,17 @@ const LoginButton = styled(Link)`
   font-size: 16px;
   cursor: pointer;
   background: #000;
+
   &:hover {
-    background-color:  #dfb40a;
+    background-color: #c3bc2f;
     color: #000;
+    border:4px solid #5a5820;
+
   }
 `;
 const SubmitButton = styled.button`
   display: inline-block;
-  border: 4px solid  #dfb40a;
+  border: 4px solid #c3bc2f;
   transition: background-color 0.5s ease 0s;
   color: #fff;
   padding: 25px 40px;
@@ -135,8 +186,10 @@ const SubmitButton = styled.button`
   cursor: pointer;
   background: #000;
   &:hover {
-    background-color:  #dfb40a;
+    background-color: #c3bc2f;
     color: #000;
+    border:4px solid #5a5820;
+
   }
 `;
 const ButtonContainer = styled.div`
@@ -144,4 +197,9 @@ const ButtonContainer = styled.div`
   justify-content: space-evenly;
   align-items: center;
 `;
-
+const ErrorMessage = styled.p`
+  font-size: 17px;
+  color: red;
+  margin-bottom: 25px;
+  text-align: center;
+`;

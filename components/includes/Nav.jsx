@@ -17,7 +17,7 @@ function Nav() {
               {" "}
               <Logo>
                 <Link to="/home">
-                  <Image src={require("../assets/images/shop.png")} />
+                  <Image src={require("../assets/images/logo4.png")} />
                 </Link>
               </Logo>
               
@@ -29,7 +29,7 @@ function Nav() {
             <>
               <Logo>
                 <Link to="/auth/login/">
-                  <Image src={require("../assets/images/shop.png")} />
+                  <Image src={require("../assets/images/logo4.png")} />
                 </Link>
               </Logo>
               <Button>
@@ -47,7 +47,7 @@ function Nav() {
 
 const Container = styled.header`
   padding: 35px 0px;
-  background-color: #000;
+  background-color: #a6a5a5;
   height: 80px;
 `;
 const FlexContainer = styled.div`
@@ -75,24 +75,21 @@ const Button = styled.button`
   font-size: 19px;
   font-weight: 600;
   display: inline-block;
-  background: #1ae10c;
+  background: #c3bc2f;
   transition: background-color 0.5s ease 0s;
   color: #fff;
   cursor: pointer;
-  border:2px solid #07fb17;
+  border:4px solid #c3bc2f;
   border-radius: 5px;
-    &:hover {
-     background-color: black;
-  }
+ 
   a {
     color: #fff;
     text-decoration: none;
   }
   background: #000;
   &:hover {
-    background-color: #09f905;
+    background-color: #c3bc2f;
     color: #000;
+    border:4px solid #5a5820;
   }`;
-
-
 export default Nav;

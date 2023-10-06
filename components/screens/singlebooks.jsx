@@ -11,7 +11,55 @@ function SingleFood() {
   const { userData } = useContext(UserContext);
   const navi = useNavigate();
 
-
+  const getSingleFood = async () => {
+    const result = await axios
+      .get(`http://127.0.0.1:8000/api/v1/books/${id}/`, {
+        headers: {
+          Authorization: `Bearer ${userData?.access}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setDes(response.data.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        if (error.response.status && error.response.status === 401) {
+          navi("/auth/login");
+        }
+      });
+  };
+  const deleteUser = async (id) => {
+    await axios.delete(`http://127.0.0.1:8000/api/v1/books/${id}/delete/`, {
+      headers: {
+        Authorization: `Bearer ${userData?.access}`,
+      },
+    });
+    navi("/home");
+  };
+  const add_to_favorites = async (id) => {
+    console.log(id, "==id ==");
+    await axios
+      .post(`http://127.0.0.1:8000/api/v1/books/${id}/add-to-favorites/`, {
+        headers: {
+          Authorization: `Bearer ${userData?.access}`,
+        },
+      })
+      .then((response) => {
+        console.log(response, "==favourite");
+        if (response.data.status_code === 6000) {
+          const favorites = document.getElementById("Favourites");
+          favorites.style.display = "none";
+          const fav = document.getElementById("fav");
+          fav.style.display = "block";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const renderFoods = () => {
     return (
       <>
         <Helmet>
