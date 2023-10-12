@@ -7,7 +7,6 @@ import { UserContext } from "../../App";
 function UpdateRecipie() {
   // const [image, setImage] = useState("");
   // const [name, setName] = useState("");
-  // const [foodName, setFoodName] = useState("");
   // const [description, setDescription] = useState("");
   // const [ingredients, setIngredients] = useState("");
   const [image, setImage] = useState("");
@@ -140,6 +139,5 @@ const TextInput = styled.input`
   display: block;
   width: 50%;
 `;
-const TextArea = styled.textarea``;
 const ButtonContainer = styled.div``;
 const SubmitButton = styled.button``;

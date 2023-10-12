@@ -63,7 +63,7 @@ function SingleFood() {
     return (
       <>
         <Helmet>
-          <title>AllRecipes|Single Recipie</title>
+          <title>All Books|Single Books</title>
         </Helmet>
         <MainContainer>
           <DesHead>{des.name}</DesHead>
@@ -92,11 +92,28 @@ function SingleFood() {
             <RightContainer></RightContainer>
           </FoodCard>
           <Content>
-            <Top>BOOk NAME :</Top>
+            <Top>Book Name :</Top>
             <Cont>{des.title}</Cont>
             {/* <Top>Description  : </Top>
             <Cont>{des.description}</Cont> */}
-          </Content>
+            </Content>
+            <IconContainer>
+              <Icon src={require("../assets/images/icon_star.png")}/>
+              <Icon src={require("../assets/images/icon_star.png")}/>
+              <Icon src={require("../assets/images/icon_star.png")}/>
+              <Icon src={require("../assets/images/icon_star.png")}/>
+              <Icon src={require("../assets/images/icon_star.png")}/>
+            </IconContainer>
+            <CmtBox>
+              <Comment type="text" placeholder="Create your comment..."/>
+              <Button onClick={SingleFood}>Create</Button>
+            </CmtBox>
+            <CmtTitle>All Comments</CmtTitle>
+            <ALLComments>
+              <CmtUser>David</CmtUser>
+              <CmtName>Wondurfull</CmtName>
+            </ALLComments>
+            
         </MainContainer>
       </>
     );
@@ -130,6 +147,9 @@ const Delete = styled.span`
   border-radius: 30px;
   padding: 4px 8px;
   margin-left: 10px;
+  :hover{
+    border: 2px solid red;
+  }
 `;
 
 const PublisherName = styled.h6`
@@ -148,6 +168,8 @@ const LeftContainer = styled.div`
 const ImageContainer = styled.div`
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   overflow: hidden;
 `;
 const Image = styled.img`
@@ -161,16 +183,20 @@ const RightContainer = styled.div`
   width: 48%; */
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+display: flex;
+`;
 const Top = styled.h3`
   font-size: 26px;
   margin-bottom: 20px;
 `;
 const Cont = styled.p`
-  color: #545454;
-  font-size: 18px;
-  line-height: 1.5rem;
-  font-weight: 400;
+    color: rgb(84, 84, 84);
+    font-size: 18px;
+    line-height: 3.5rem;
+    font-weight: 500;
+    margin-left: 10px;
+  
 `;
 const Fav = styled.div`
   display: none;
@@ -179,4 +205,52 @@ const Fav = styled.div`
   border-radius: 30px;
   padding: 4px 8px;
   margin-left: 10px;
+`;
+const IconContainer =styled.div`
+  display: flex;
+  padding-bottom: 30px;
+  width: 30px;
+  `;
+
+const Icon =styled.img`
+  display: block;
+  width: 100%;
+  `;
+const CmtBox =styled.div`
+  padding-bottom: 20px;
+`;
+const Comment =styled.input`
+  padding: 10px 30px;
+  border: 2px solid grey;
+  border-radius: 5px;
+`;
+
+const ALLComments= styled.div`
+  padding: 0px 40px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  display: inline-block;
+
+`;
+const Button= styled.button`
+  padding: 12px 30px;
+  border: 0px solid grey;
+  border-radius: 7px;
+  margin-left: -7px;
+  font-weight:600 ;
+  background-color: #3faadc;
+  :hover{
+  background-color: #8c8c32;
+  color: #ffffff;
+}
+`;
+const CmtTitle= styled.h4`
+padding-bottom: 10px;
+
+`;
+
+const CmtUser= styled.h5`
+
+`;
+const CmtName= styled.span`
 `;

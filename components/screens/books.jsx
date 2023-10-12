@@ -5,6 +5,8 @@ import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 export const BooksContext = createContext();
+
+
 function Books() {
   const [books, setBooks] = useState([]);
   console.log(books, "===book state");
@@ -76,7 +78,7 @@ function Books() {
   return (
     <>
       <Helmet>
-        <title>Books </title>
+        <title>Books</title>
       </Helmet>
       <BooksContext.Provider value={books}>
         <BodyContainer>
@@ -117,22 +119,31 @@ function Books() {
 
 export default Books;
 const BodyContainer = styled.div`
+  background: #a6a5a5;
   padding-top: 35px;
+  height: 100%;
 `;
 const InnerContainer = styled.div`
   width: 75%;
   margin: 0 auto;
+  background: #a6a5a5;
+
 `;
 const Heading = styled.h1`
   font-size: 30px;
   margin-bottom: 30px;
   text-align: left;
+  color: #fff;
 `;
 const SubHeading = styled.h5`
   font-size: 18px;
-  color: rgb(229, 229, 49);
+  color: #fff;
   margin-bottom: 50px;
   text-align: left;
+ :hover{
+  color: #f2f295;
+ }
+ 
 `;
 const BooksList = styled.ul`
   display: flex;
@@ -177,9 +188,9 @@ const SearchBox = styled.div`
 const SearchForm = styled.form`
   display: flex;
   align-items: center;
-  background: #f4f4be;
+  background: #d3d3d1;
   padding: 18px 17px;
-  border-radius: 35px;
+  border-radius: 4px;
   width: 38%;
 `;
 const SearchInput = styled.input`
@@ -192,16 +203,19 @@ const SearchInput = styled.input`
 const SearchSubmit = styled.button`
   margin-left: 5px;
   display: inline-block;
-  border: 1px solid #000;
+  border: 3px solid #b3ac3a;
+  background-color: #000;
   padding: 8px 14px;
-  font-size: 13px;
-  background: transparent;
+  font-size: 15px;
+  color: #fff;
   position: relative;
   cursor: pointer;
+  border-radius: 5px;
   transition: all 0.5s;
   &:hover {
-    background-color: #ff6600;
-    color: #fff;
+    background-color: #b3ac3a;
+    border: 3px solid #4e4b1f;
+    color: #000;
   }
 `;
 const ResultHeading = styled.h3`

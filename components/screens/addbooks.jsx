@@ -26,8 +26,8 @@ function AddRecipie() {
     formField.append("title", name);
     formField.append("description", description);
     formField.append("categories", JSON.stringify(categories)); // Convert to JSON string
-    // formField.append("favorite", favorite);
-    // formField.append("ingredients", ingredients);
+    formField.append("favorite", favorite);
+    formField.append("ingredients", ingredients);
     if (image !== null) {
       formField.append("featured_image", image);
     }
@@ -57,17 +57,6 @@ function AddRecipie() {
             onChange={(e) => setName(e.target.value)}
           />
         </InputContainer>
-        {/* <InputContainer>
-          <Label for="id_food_name">Book Name</Label>
-          <TextInput
-            type="text"
-            placeholder="Enter Food Name"
-            id="id_food_name"
-            name="name"
-            value={bookName}
-            onChange={(e) => setbookName(e.target.value)}
-          />
-        </InputContainer> */}
         <InputContainer>
           <Label for="id_featured_image">Featured Image</Label>
           <TextInput
@@ -75,6 +64,16 @@ function AddRecipie() {
             accept="image/*"
             id="id_featured_image"
             onChange={(e) => setImage(e.target.files[0])}
+          />
+        </InputContainer>
+        <InputContainer>
+          <Label for="id_description">description</Label>
+          <TextInput
+            type="text"
+            placeholder="description"
+            id="id_description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </InputContainer>
         <InputContainer>
@@ -119,10 +118,9 @@ function AddRecipie() {
             onChange={(e) => setFavorite(e.target.checked)}
           />
         </InputContainer>
-
         <ButtonContainer>
           <Link to="/home">
-            <SubmitButton onClick={addRecipieInfo}>Add Recipie</SubmitButton>{" "}
+            <SubmitButton onClick={addRecipieInfo}>Add Book</SubmitButton>{" "}
           </Link>
         </ButtonContainer>
       </FormConatiner>
@@ -135,13 +133,13 @@ export default AddRecipie;
 const MainContainer = styled.div`
   width: 85%;
   margin: 0 auto;
+  
 `;
 const Heading = styled.h1`
   text-align: center;
 `;
 const FormConatiner = styled.form`
   width: 90%;
-
   margin: 36px auto 0px;
 `;
 const InputContainer = styled.div`
@@ -158,7 +156,20 @@ const Label = styled.label`
 const TextInput = styled.input`
   display: block;
   width: 50%;
+  padding: 10px ;
+  background-color: #ececec;
+  border: none;
 `;
-const TextArea = styled.textarea``;
 const ButtonContainer = styled.div``;
-const SubmitButton = styled.button``;
+
+const SubmitButton = styled.button`
+background-color: #000;
+border: 4px solid  #cdcd41 ;
+padding: 10px 20px;
+color: #fff;
+:hover{
+  background-color: #bfba56;
+  border: 3px solid #68681c;
+  color: #000;
+}
+`;
