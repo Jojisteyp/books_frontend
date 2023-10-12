@@ -15,7 +15,6 @@ import Signup from "./Components/Screens/signup";
 import SingleFood from "./Components/Screens/SingleBooks";
 import UpdateRecipie from "./Components/Screens/UpdateBooks";
 import Books from "./Components/Screens/books";
-import Chategory from "./Components/Screens/Chategory";
 
 export const UserContext = createContext();
 function App() {
@@ -53,7 +52,6 @@ function App() {
             />
              <Route exact path="*" element={<NoMatch />} />
             <Route exact path="/home" element={<Books/>} />
-            <Route exact path="/chategory" element={<Chategory/>} />
             <Route exact path="/home/add/" element={<AddRecipie />} />
             <Route exact path="/description/:id" element={<SingleFood />} />
             <Route path="/auth/login/" exact element={<Login />} />
