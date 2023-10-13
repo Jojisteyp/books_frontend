@@ -10,6 +10,8 @@ function SingleFood() {
   const { id } = useParams();
   const { userData } = useContext(UserContext);
   const navi = useNavigate();
+  const [user, setUser] = useState("john wick");
+  const [comment, setComment] = useState("its a good content");
 
   const getSingleFood = async () => {
     const result = await axios
@@ -38,6 +40,8 @@ function SingleFood() {
     });
     navi("/home");
   };
+  
+
   const add_to_favorites = async (id) => {
     console.log(id, "==id ==");
     await axios
@@ -59,6 +63,23 @@ function SingleFood() {
         console.log(err);
       });
   };
+  const createComments= async(id)=>{
+    console.log(id);
+    await axios
+      .post(`http://127.0.0.1:8000/api/v1/books/comments/create/${id}`, {
+        headers: {
+          Authorization: `Bearer ${userData?.access}`,
+        },
+        })
+        .then((response) => {
+          console.log(response, "==createComments");
+          })
+          .catch((err) => {
+          console.log(err);
+          });
+        };
+    
+
   const renderFoods = () => {
     return (
       <>
@@ -106,12 +127,12 @@ function SingleFood() {
             </IconContainer>
             <CmtBox>
               <Comment type="text" placeholder="Create your comment..."/>
-              <Button onClick={SingleFood}>Create</Button>
+              <Button onClick={() => createComments(1)}>Create</Button>
             </CmtBox>
             <CmtTitle>All Comments</CmtTitle>
             <ALLComments>
-              <CmtUser>David</CmtUser>
-              <CmtName>Wondurfull</CmtName>
+            <CmtUser>{user}</CmtUser>
+            <CmtName>{comment}</CmtName>
             </ALLComments>
             
         </MainContainer>
@@ -226,10 +247,11 @@ const Comment =styled.input`
 `;
 
 const ALLComments= styled.div`
-  padding: 0px 40px;
+  padding: 10px 40px;
   border: 2px solid grey;
   border-radius: 5px;
   display: inline-block;
+  margin-bottom: 20px;
 
 `;
 const Button= styled.button`
